@@ -1,0 +1,123 @@
+:root {
+    --login-bg: #08111d;
+    --login-panel: rgba(15, 27, 45, 0.92);
+    --login-border: rgba(148, 163, 184, 0.22);
+    --login-text: #f8fafc;
+    --login-muted: #94a3b8;
+    --login-gold: #d4af63;
+    --login-accent: #2563eb;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background:
+        radial-gradient(circle at top left, rgba(212, 175, 99, 0.12), transparent 28%),
+        linear-gradient(180deg, #040b16 0%, #08111d 100%);
+    color: var(--login-text);
+    min-height: 100vh;
+}
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-card {
+    width: min(460px, 100%);
+    background: var(--login-panel);
+    border: 1px solid var(--login-border);
+    border-radius: 24px;
+    padding: 34px 30px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.3);
+}
+
+.login-kicker {
+    color: var(--login-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.78rem;
+    margin-bottom: 12px;
+}
+
+.login-card h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.login-subtitle {
+    color: var(--login-muted);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.login-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.login-field span {
+    color: #dbe6f3;
+    font-size: 0.95rem;
+}
+
+.login-field input {
+    height: 46px;
+    border-radius: 12px;
+    border: 1px solid var(--login-border);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--login-text);
+    font: inherit;
+    padding: 0 14px;
+}
+
+.login-field input:focus {
+    outline: none;
+    border-color: var(--login-accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
+
+.login-message {
+    min-height: 20px;
+    font-size: 0.92rem;
+    color: var(--login-muted);
+}
+
+.login-message.is-error {
+    color: #f87171;
+}
+
+.login-message.is-success {
+    color: #4ade80;
+}
+
+#login-submit {
+    height: 46px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--login-accent);
+    color: #ffffff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#login-submit:disabled {
+    cursor: wait;
+    opacity: 0.75;
+}

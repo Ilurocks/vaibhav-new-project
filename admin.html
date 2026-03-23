@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Enquiries</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <main class="admin-page">
+        <section class="admin-hero">
+            <div>
+                <p class="admin-kicker">Admin Dashboard</p>
+                <h1>Enquiry Management</h1>
+                <p class="admin-subtitle">Review the leads captured from the Enquire Now popup in one place.</p>
+            </div>
+            <div class="admin-actions">
+                <input type="search" id="search-input" placeholder="Search by name, email, or phone">
+                <button type="button" id="refresh-btn">Refresh</button>
+                <button type="button" id="logout-btn" class="logout-btn">Logout</button>
+            </div>
+        </section>
+
+        <section class="admin-stats">
+            <article class="admin-stat-card">
+                <span>Total Enquiries</span>
+                <strong id="stat-total">0</strong>
+            </article>
+            <article class="admin-stat-card">
+                <span>Latest Submission</span>
+                <strong id="stat-latest">-</strong>
+            </article>
+            <article class="admin-stat-card">
+                <span>Status</span>
+                <strong id="stat-status">Loading...</strong>
+            </article>
+        </section>
+
+        <section class="admin-table-section">
+            <div class="admin-table-head">
+                <h2>All Enquiries</h2>
+                <p id="result-count">0 results</p>
+            </div>
+
+            <div class="admin-table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Phone Number</th>
+                            <th>Email</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody id="enquiries-body">
+                        <tr>
+                            <td colspan="5" class="empty-state">Loading enquiries...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+</html>
