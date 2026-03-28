@@ -112,8 +112,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   if (isAllowedDevOrigin(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin || '*');
-    res.setHeader('Vary', 'Origin');
+    if (origin) {
+      // For credentialed CORS requests, ACAO must be an explicit origin (including "null").
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Vary', 'Origin');
+    } else {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+    }
     res.setHeader('Access-Control-Allow-Credentials', 'true');
   }
 

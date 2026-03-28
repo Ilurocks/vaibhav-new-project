@@ -1,11 +1,55 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log("The Hallmark by Kanakia - Website Loaded");
-    const apiBases = window.location.port === '3000'
-        ? ['']
-        : ['http://localhost:3000', 'http://127.0.0.1:3000'];
 
     // Sticky Navbar
     const header = document.querySelector('header');
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navLinks = document.getElementById('site-nav-links');
+
+    const closeNavMenu = () => {
+        if (!hamburgerBtn || !navLinks) return;
+        hamburgerBtn.classList.remove('is-open');
+        navLinks.classList.remove('is-open');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+    };
+
+    const openNavMenu = () => {
+        if (!hamburgerBtn || !navLinks) return;
+        hamburgerBtn.classList.add('is-open');
+        navLinks.classList.add('is-open');
+        hamburgerBtn.setAttribute('aria-expanded', 'true');
+    };
+
+    hamburgerBtn?.addEventListener('click', () => {
+        const isOpen = navLinks?.classList.contains('is-open');
+        if (isOpen) {
+            closeNavMenu();
+        } else {
+            openNavMenu();
+        }
+    });
+
+    navLinks?.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+            closeNavMenu();
+        });
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!hamburgerBtn || !navLinks) return;
+        const target = event.target;
+        if (!(target instanceof Node)) return;
+        if (!navLinks.contains(target) && !hamburgerBtn.contains(target)) {
+            closeNavMenu();
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 992) {
+            closeNavMenu();
+        }
+    });
+
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             header.classList.add('scrolled');
@@ -358,6 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== ENQUIRY MODAL =====
     const enquireTrigger = document.querySelector('.enquire-now');
+    const messageTrigger = document.querySelector('.floating-chat');
     const enquiryModal = document.getElementById('enquiry-modal');
     const enquiryClose = document.getElementById('enquiry-close');
     const enquiryForm = document.querySelector('.enquiry-form');
@@ -366,24 +411,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const enquirySubmit = document.getElementById('enquiry-submit');
 
     const postEnquiry = async (payload) => {
-        let lastError = null;
-
-        for (const base of apiBases) {
-            const endpoint = `${base}/api/enquiries`;
-            try {
-                return await fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
-            } catch (error) {
-                lastError = error;
-            }
-        }
-
-        throw lastError || new Error('Unable to reach enquiry API.');
+        return fetch('api/enquiries.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
     };
 
     const setEnquiryMessage = (message, type = '') => {
@@ -419,6 +453,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    messageTrigger?.addEventListener('click', openEnquiryModal);
+    messageTrigger?.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openEnquiryModal();
+        }
+    });
+
     enquiryClose?.addEventListener('click', closeEnquiryModal);
 
     enquiryModal?.addEventListener('click', (event) => {
@@ -428,6 +470,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closeNavMenu();
+        }
+
         if (event.key === 'Escape' && enquiryModal?.classList.contains('is-open')) {
             closeEnquiryModal();
         }
@@ -483,12 +529,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeEnquiryModal();
             }, 900);
         } catch (error) {
-            const networkError = error instanceof TypeError || String(error?.message || '').toLowerCase().includes('failed to fetch');
-            if (networkError) {
-                setEnquiryMessage('Cannot reach API server. Start server.js on port 3000 and try again.', 'is-error');
-            } else {
-                setEnquiryMessage(error.message || 'Something went wrong. Please try again.', 'is-error');
-            }
+            setEnquiryMessage(error.message || 'Something went wrong. Please try again.', 'is-error');
         } finally {
             if (enquirySubmit) {
                 enquirySubmit.disabled = false;

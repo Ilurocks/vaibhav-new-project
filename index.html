@@ -19,7 +19,12 @@
                     <span class="sub-text">BY KANAKIA</span>
                 </div>
             </a>
-            <ul class="nav-links">
+            <button class="hamburger" id="hamburger-btn" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="site-nav-links">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            <ul class="nav-links" id="site-nav-links">
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#appreciation">Location Appreciation</a></li>
                 <li><a href="#connectivity-stats">Location Connectivity</a></li>
@@ -147,7 +152,7 @@
                 </div>
             </div>
 
-            <div class="floating-chat">
+            <div class="floating-chat" role="button" tabindex="0" aria-label="Open enquiry form">
                 <svg viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
             </div>
         </section>
