@@ -7,35 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const statTotal = document.getElementById('stat-total');
     const statLatest = document.getElementById('stat-latest');
     const statStatus = document.getElementById('stat-status');
-    const apiBases = window.location.port === '3000'
-        ? ['']
-        : ['http://localhost:3000', 'http://127.0.0.1:3000'];
-    let activeApiBase = apiBases[0];
-
+    const appBasePath = String(window.APP_BASE_PATH || '');
+    const withBase = (path) => `${appBasePath}${path}`;
     let enquiries = [];
 
     const redirectToLogin = () => {
-        window.location.href = `${activeApiBase}/login`;
-    };
-
-    const requestWithFallback = async (path, options = {}) => {
-        let lastError = null;
-
-        for (const base of apiBases) {
-            try {
-                const response = await fetch(`${base}${path}`, {
-                    ...options,
-                    credentials: 'include'
-                });
-
-                activeApiBase = base;
-                return response;
-            } catch (error) {
-                lastError = error;
-            }
-        }
-
-        throw lastError || new Error(`Unable to reach API for ${path}.`);
+        window.location.href = withBase('/login.php');
     };
 
     const formatDate = (value) => {
@@ -92,7 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
         refreshBtn.disabled = true;
 
         try {
-            const response = await requestWithFallback('/api/enquiries');
+            const response = await fetch(withBase('/api/enquiries.php'), {
+                credentials: 'include'
+            });
             if (response.status === 401) {
                 redirectToLogin();
                 return;
@@ -121,10 +100,11 @@ document.addEventListener('DOMContentLoaded', () => {
             statStatus.textContent = 'Live';
             applySearch();
         } catch (error) {
+            const message = String(error?.message || 'Unable to load enquiries.');
             statStatus.textContent = 'Error';
             enquiriesBody.innerHTML = `
                 <tr>
-                    <td colspan="5" class="empty-state">${error.message}</td>
+                    <td colspan="5" class="empty-state">${message}</td>
                 </tr>
             `;
             resultCount.textContent = '0 results';
@@ -138,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     logoutBtn.addEventListener('click', async () => {
         logoutBtn.disabled = true;
         try {
-            await requestWithFallback('/api/admin/logout', {
+            await fetch(withBase('/api/admin_logout.php'), {
                 method: 'POST'
             });
         } finally {

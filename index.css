@@ -48,6 +48,7 @@ header.scrolled {
     padding: 0 5%;
     height: var(--nav-height);
     background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 100%);
+    position: relative;
 }
 
 .logo {
@@ -105,6 +106,88 @@ header.scrolled {
 .nav-links li a:hover {
     color: var(--primary-gold);
     opacity: 1;
+}
+
+.hamburger {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 10px;
+    background: rgba(2, 6, 23, 0.5);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.hamburger-line {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #ffffff;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.hamburger:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+@media (max-width: 992px) {
+    .hamburger {
+        display: inline-flex;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: calc(var(--nav-height) - 6px);
+        right: 5%;
+        width: min(86vw, 320px);
+        padding: 16px 18px;
+        border-radius: 14px;
+        background: rgba(2, 6, 23, 0.94);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 18px 34px rgba(0, 0, 0, 0.35);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-8px);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-links.is-open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links li a {
+        display: block;
+        width: 100%;
+        font-size: 0.95rem;
+        padding: 6px 0;
+    }
+
+    .hamburger.is-open .hamburger-line:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.is-open .hamburger-line:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.is-open .hamburger-line:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
 }
 
 /* Hero Section */
@@ -194,7 +277,7 @@ header.scrolled {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 18px;
+    gap: 10px;
     z-index: 1000;
 }
 
@@ -221,19 +304,16 @@ header.scrolled {
 .call-btn {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
+    justify-content: flex-start;
     text-decoration: none;
     color: #eef4fa;
     background: #7b8792;
-    padding: 12px 22px 12px 20px;
-    min-width: 285px;
+    padding: 0 0 0 22px;
+    width: 45px;
     height: 58px;
     border-radius: 999px 0 0 999px;
-    border: 2px solid rgba(255, 255, 255, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.32);
     box-shadow: 0 12px 26px rgba(15, 23, 42, 0.2);
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: 0.3px;
     transition: transform 0.3s ease, background 0.3s ease;
 }
 
@@ -246,15 +326,12 @@ header.scrolled {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
+    width: 28px;
+    height: 28px;
 }
 
 .call-text {
-    display: inline-block;
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1;
+    display: none;
 }
 
 .enquire-now:focus-visible,
@@ -275,14 +352,13 @@ header.scrolled {
     }
 
     .call-btn {
-        min-width: 238px;
+        width: 78px;
         height: 52px;
-        padding: 10px 18px;
-        gap: 10px;
+        padding-left: 18px;
     }
 
     .call-text {
-        font-size: 1.35rem;
+        display: none;
     }
 }
 
@@ -310,16 +386,18 @@ header.scrolled {
     }
 
     .call-btn {
-        min-width: 196px;
+        width: 52px;
         height: 52px;
         border-radius: 50%;
         border-radius: 999px;
         border: 0;
+        padding-left: 0;
+        justify-content: center;
         box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
     }
 
     .call-text {
-        font-size: 1.05rem;
+        display: none;
     }
 }
 
@@ -337,10 +415,10 @@ header.scrolled {
     }
 
     .call-btn {
-        min-width: 172px;
+        width: 46px;
         height: 46px;
-        padding: 10px 14px;
-        gap: 8px;
+        padding: 0;
+        justify-content: center;
     }
 
     .call-icon {
@@ -354,7 +432,7 @@ header.scrolled {
     }
 
     .call-text {
-        font-size: 0.94rem;
+        display: none;
     }
 }
 
