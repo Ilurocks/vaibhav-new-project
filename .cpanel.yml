@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/$USER/public_html/
+    - /usr/bin/rsync -av --delete --exclude ".git/" --exclude ".github/" --exclude "node_modules/" --exclude ".vscode/" ./ $DEPLOYPATH
