@@ -402,6 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== ENQUIRY MODAL =====
     const enquireTrigger = document.querySelector('.enquire-now');
+    const messageTrigger = document.querySelector('.floating-chat');
     const enquiryModal = document.getElementById('enquiry-modal');
     const enquiryClose = document.getElementById('enquiry-close');
     const enquiryForm = document.querySelector('.enquiry-form');
@@ -446,6 +447,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     enquireTrigger?.addEventListener('click', openEnquiryModal);
     enquireTrigger?.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openEnquiryModal();
+        }
+    });
+
+    messageTrigger?.addEventListener('click', openEnquiryModal);
+    messageTrigger?.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
             openEnquiryModal();
